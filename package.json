@@ -46,7 +46,8 @@
     "lib": "lib"
   },
   "dependencies": {
-    "@feathersjs/errors": "^3.3.0"
+    "@feathersjs/errors": "^3.3.0",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@feathersjs/feathers": "^3.1.4",
