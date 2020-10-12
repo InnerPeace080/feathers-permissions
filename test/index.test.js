@@ -21,12 +21,14 @@ describe('feathers-permissions integration tests', () => {
 
     describe('internal calls', () => {
       it('does nothing when no entity is available', () => {
-        return app.service('messages').create({text: 'hello'}).then(result => {
-          assert.deepEqual(result, {
-            id: 0,
-            text: 'hello'
+        return app.service('messages').create({text: 'hello'})
+          .then((result) => {
+            assert.deepEqual(result, {
+              id: 0,
+              text: 'hello'
+            });
+            return;
           });
-        });
       });
 
       it('sets isPermitted false when entity is available but has no permissions', () => {
@@ -41,12 +43,13 @@ describe('feathers-permissions integration tests', () => {
         });
 
         return app.service('messages').create({text: 'hello'}, {user})
-          .then(result => {
+          .then((result) => {
             assert.deepEqual(result, {
               id: 0,
               text: 'hello',
               permitted: false
             });
+            return;
           });
       });
 
@@ -62,12 +65,13 @@ describe('feathers-permissions integration tests', () => {
         });
 
         return app.service('messages').create({text: 'hello'}, {user})
-          .then(result => {
+          .then((result) => {
             assert.deepEqual(result, {
               id: 0,
               text: 'hello',
               permitted: true
             });
+            return;
           });
       });
     });
@@ -78,7 +82,7 @@ describe('feathers-permissions integration tests', () => {
 
         return app.service('messages').create({text: 'hello'}, params)
           .then(() => assert.fail('Should never get here'))
-          .catch(error => assert.deepEqual(error.toJSON(), {
+          .catch((error) => assert.deepEqual(error.toJSON(), {
             name: 'Forbidden',
             message: 'You do not have the correct permissions (invalid permission entity).',
             code: 403,
@@ -98,7 +102,7 @@ describe('feathers-permissions integration tests', () => {
 
         return app.service('messages').create({text: 'hello'}, params)
           .then(() => assert.fail('Should never get here'))
-          .catch(error => assert.deepEqual(error.toJSON(), {
+          .catch((error) => assert.deepEqual(error.toJSON(), {
             name: 'Forbidden',
             message: 'You do not have the correct permissions.',
             code: 403,
@@ -109,7 +113,7 @@ describe('feathers-permissions integration tests', () => {
       });
 
       describe('successful permission', () => {
-        ['*', 'admin:*', '*:create', 'admin:create'].forEach(permission => {
+        ['*', 'admin:*', '*:create', 'admin:create'].forEach((permission) => {
           it(`allows the '${permission}' permission as array`, () => {
             const params = {
               provider: 'test',
@@ -120,7 +124,7 @@ describe('feathers-permissions integration tests', () => {
             };
 
             return app.service('messages').create({text: 'hello'}, params)
-              .then(result => assert.deepEqual(result, {
+              .then((result) => assert.deepEqual(result, {
                 id: 0,
                 text: 'hello'
               }));
@@ -136,7 +140,7 @@ describe('feathers-permissions integration tests', () => {
             };
 
             return app.service('messages').create({text: 'hello'}, params)
-              .then(result => assert.deepEqual(result, {
+              .then((result) => assert.deepEqual(result, {
                 id: 0,
                 text: 'hello'
               }));
@@ -145,7 +149,7 @@ describe('feathers-permissions integration tests', () => {
       });
 
       describe('unsuccessful permission', () => {
-        ['user:*', '*:update', 'admin:find'].forEach(permission => {
+        ['user:*', '*:update', 'admin:find'].forEach((permission) => {
           it(`fails the '${permission}' permission`, () => {
             const params = {
               provider: 'test',
@@ -157,7 +161,7 @@ describe('feathers-permissions integration tests', () => {
 
             return app.service('messages').create({text: 'hello'}, params)
               .then(() => assert.fail('Should never get here'))
-              .catch(error => assert.deepEqual(error.toJSON(), {
+              .catch((error) => assert.deepEqual(error.toJSON(), {
                 name: 'Forbidden',
                 message: 'You do not have the correct permissions.',
                 code: 403,
@@ -186,12 +190,14 @@ describe('feathers-permissions integration tests', () => {
 
     describe('internal calls', () => {
       it('does nothing when no entity is available', () => {
-        return app.service('messages').create({text: 'hello'}).then(result => {
-          assert.deepEqual(result, {
-            id: 0,
-            text: 'hello'
+        return app.service('messages').create({text: 'hello'})
+          .then((result) => {
+            assert.deepEqual(result, {
+              id: 0,
+              text: 'hello'
+            });
+            return;
           });
-        });
       });
 
       it('sets isPermitted false when entity is available but has no permissions', () => {
@@ -206,12 +212,13 @@ describe('feathers-permissions integration tests', () => {
         });
 
         return app.service('messages').create({text: 'hello'}, {user})
-          .then(result => {
+          .then((result) => {
             assert.deepEqual(result, {
               id: 0,
               text: 'hello',
               permitted: false
             });
+            return;
           });
       });
 
@@ -227,12 +234,13 @@ describe('feathers-permissions integration tests', () => {
         });
 
         return app.service('messages').create({text: 'hello'}, {user})
-          .then(result => {
+          .then((result) => {
             assert.deepEqual(result, {
               id: 0,
               text: 'hello',
               permitted: true
             });
+            return;
           });
       });
     });
@@ -243,7 +251,7 @@ describe('feathers-permissions integration tests', () => {
 
         return app.service('messages').create({text: 'hello'}, params)
           .then(() => assert.fail('Should never get here'))
-          .catch(error => assert.deepEqual(error.toJSON(), {
+          .catch((error) => assert.deepEqual(error.toJSON(), {
             name: 'Forbidden',
             message: 'You do not have the correct permissions (invalid permission entity).',
             code: 403,
@@ -263,7 +271,7 @@ describe('feathers-permissions integration tests', () => {
 
         return app.service('messages').create({text: 'hello'}, params)
           .then(() => assert.fail('Should never get here'))
-          .catch(error => assert.deepEqual(error.toJSON(), {
+          .catch((error) => assert.deepEqual(error.toJSON(), {
             name: 'Forbidden',
             message: 'You do not have the correct permissions.',
             code: 403,
@@ -274,7 +282,7 @@ describe('feathers-permissions integration tests', () => {
       });
 
       describe('successful permission', () => {
-        ['*', 'messages:*', '*:create', 'messages:create'].forEach(permission => {
+        ['*', 'messages:*', '*:create', 'messages:create'].forEach((permission) => {
           it(`allows the '${permission}' permission as array`, () => {
             const params = {
               provider: 'test',
@@ -285,7 +293,7 @@ describe('feathers-permissions integration tests', () => {
             };
 
             return app.service('messages').create({text: 'hello'}, params)
-              .then(result => assert.deepEqual(result, {
+              .then((result) => assert.deepEqual(result, {
                 id: 0,
                 text: 'hello'
               }));
@@ -301,7 +309,7 @@ describe('feathers-permissions integration tests', () => {
             };
 
             return app.service('messages').create({text: 'hello'}, params)
-              .then(result => assert.deepEqual(result, {
+              .then((result) => assert.deepEqual(result, {
                 id: 0,
                 text: 'hello'
               }));
@@ -310,7 +318,7 @@ describe('feathers-permissions integration tests', () => {
       });
 
       describe('unsuccessful permission', () => {
-        ['user:*', '*:update', 'messages:find'].forEach(permission => {
+        ['user:*', '*:update', 'messages:find'].forEach((permission) => {
           it(`fails the '${permission}' permission`, () => {
             const params = {
               provider: 'test',
@@ -322,7 +330,7 @@ describe('feathers-permissions integration tests', () => {
 
             return app.service('messages').create({text: 'hello'}, params)
               .then(() => assert.fail('Should never get here'))
-              .catch(error => assert.deepEqual(error.toJSON(), {
+              .catch((error) => assert.deepEqual(error.toJSON(), {
                 name: 'Forbidden',
                 message: 'You do not have the correct permissions.',
                 code: 403,
